@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package ru.spring.grpc;
+
+option java_multiple_files = true;
+
+service BookAuthorService {
+
+  // sync client request - sync server response
+  rpc getAuthor(AuthorId) returns (Author);
+
+  // client send authorId and get books list by stream
+  rpc getBooksByAuthor(AuthorId) returns (stream Book);
+
+  // client send book stream and receive the most expansive book
+  rpc getMostExpansiveBook(stream Book) returns (Book);
+
+  // client send author stream and get book stream (bi-directional streaming)
+  rpc getBookByGender(stream AuthorId) returns (stream Book);
+
+  // client send empty request and get book stream
+  rpc getAllBooks(Empty) returns (stream Book);
+}
+
+message Book {
+  int32 book_id = 1;
+  string title = 2;
+  float price = 3;
+  int32 author_id = 4;
+}
+
+message Author {
+  int32 author_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  Gender gender = 4;
+  int32 book_id = 5;
+}
+
+message AuthorId {
+  int32 author_id = 1;
+}
+
+enum Gender {
+  male = 0;
+  female = 1;
+}
+
+message Empty {}
+

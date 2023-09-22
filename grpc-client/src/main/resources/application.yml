@@ -1,0 +1,10 @@
+grpc:
+  client:
+    my-grpc-async-client:
+      address: static://localhost:9095
+      negotiation-type: plaintext
+    my-grpc-blocking-client:
+      address: static://localhost:9095
+      negotiation-type: plaintext
+server:
+  port: 8088
